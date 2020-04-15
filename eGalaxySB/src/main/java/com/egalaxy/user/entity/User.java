@@ -14,7 +14,7 @@ public class User {
 	@Id
 	@Column(name = "USER_ID")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int userId;
+	private long userId;
 	@Column(name = "USER_NAME")
 	private String userName;
 	@Column(name = "USER_EMAIL", length = 30)
@@ -35,7 +35,7 @@ public class User {
 		this.userId = userId;
 	}
 	
-	public int getUserId() {
+	public long getUserId() {
 		return this.userId;
 	}
 

@@ -8,7 +8,7 @@ import com.egalaxy.user.entity.User;
 public interface UserService {
 	
 	List<User> getAllUsers();
-	Optional<User> getUser(int userId);
+	Optional<User> getUserById(int userId);
 	public void deleteAllUsers();
 	public void deleteUser(int userId);
 	public void updateUser(User user);

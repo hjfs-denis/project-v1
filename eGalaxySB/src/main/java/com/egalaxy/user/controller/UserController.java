@@ -23,7 +23,7 @@ import com.egalaxy.user.service.UserService;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping(value = "/user")
-public class UserRestController {
+public class UserController {
 	
 	@Autowired
 	private UserService userService;
