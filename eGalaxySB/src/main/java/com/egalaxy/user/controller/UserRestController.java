@@ -1,6 +1,7 @@
 package com.egalaxy.user.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -56,7 +57,7 @@ public class UserRestController {
 
 	
 	@GetMapping(value = "/get/{id}")
-	public User getOneCustomer(@PathVariable(value = "id") int userId) {
+	public Optional<User> getOneCustomer(@PathVariable(value = "id") int userId) {
 		return userService.getUser(userId);
 	}
 	
