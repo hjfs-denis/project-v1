@@ -17,7 +17,10 @@ public class User {
 	private int userId;
 	@Column(name = "USER_NAME")
 	private String userName;
-	@Column(name = "USER_PASSWORD")
+	@Column(name = "USER_EMAIL", length = 30)
+	private String userEmail;
+	//@Null(message = "Please provide the password")
+	@Column(name = "USER_PASSWORD", length = 30)
 	private String userPassword;
 	@Column(name = "USER_DOB")
 	private String userDob;
