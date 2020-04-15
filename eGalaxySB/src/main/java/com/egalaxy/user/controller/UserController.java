@@ -60,7 +60,7 @@ public class UserController {
 	
 	@GetMapping(value = "/get/{id}")
 	public Optional<User> getOneCustomer(@PathVariable(value = "id") int userId) {
-		return userService.getUser(userId);
+		return userService.getUserById(userId);
 	}
 	
 
