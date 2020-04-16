@@ -52,7 +52,7 @@ public class UserController {
 	public ResponseEntity<User> updateUser(@PathVariable(value = "id") int userId,
 	       @RequestBody User userDetails) throws ResourceNotFoundException {
 	    User user = userService.getUserById(userId)
-	        .orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + userId));
+	        .orElseThrow(() -> new ResourceNotFoundException("User not found for this id :: " + userId));
 	
 	    user.setUserId(userDetails.getUserId());
 	    user.setUserName(userDetails.getUserName());
@@ -75,7 +75,7 @@ public class UserController {
 	  public Map<String, Boolean> deleteUser(@PathVariable(value = "id") int userId)
 	      throws ResourceNotFoundException {
 	    User user = userService.getUserById(userId)
-	        .orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + userId));
+	        .orElseThrow(() -> new ResourceNotFoundException("User not found for this id :: " + userId));
 
 	    userService.deleteUser(user);
 	    Map<String, Boolean> response = new HashMap<>();
