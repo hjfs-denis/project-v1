@@ -21,44 +21,44 @@ import com.egalaxy.user.entity.User;
 import com.egalaxy.user.service.UserService;
 
 @RestController
-@CrossOrigin(origins = "*")
-@RequestMapping(value = "/user")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:4201"})
+@RequestMapping(value = "/api")
 public class UserController {
 	
 	@Autowired
 	private UserService userService;
 	
-	@GetMapping(value = "/all")
+	@GetMapping(value = "/users")
 	public List<User> getUsers(){
 		return userService.getAllUsers();
 	}
 	
-	@PostMapping(value = "/add",
+	@PostMapping(value = "/users",
 			consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public void addUser(@RequestBody User user) {
 		userService.addUser(user);
 	}
 	
-	@PutMapping(value = "/update/{id}",
+	@PutMapping(value = "/users/{id}",
 			consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public void updateUser(@PathVariable(value = "id") int userId, @RequestBody User user) {
 		userService.updateUser(user);
 	}
 	
-	@DeleteMapping(value= "/deleteAll")
+	@DeleteMapping(value= "/users")
 	public void deleteBooks() {
 		userService.deleteAllUsers();
 	}
 	
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/users/{id}")
 	public void deleteBook(@PathVariable(value = "id") int userId) {
 		userService.deleteUser(userId);
 	}
 
 	
-	@GetMapping(value = "/get/{id}")
+	@GetMapping(value = "/users/{id}")
 	public Optional<User> getOneCustomer(@PathVariable(value = "id") int userId) {
 		return userService.getUserById(userId);
 	}
