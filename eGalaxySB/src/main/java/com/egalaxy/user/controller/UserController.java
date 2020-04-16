@@ -1,12 +1,13 @@
 package com.egalaxy.user.controller;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.egalaxy.user.entity.User;
+import com.egalaxy.user.exception.ResourceNotFoundException;
 import com.egalaxy.user.service.UserService;
 
 @RestController
@@ -33,37 +35,53 @@ public class UserController {
 		return userService.getAllUsers();
 	}
 	
-	@PostMapping(value = "/users",
-			consumes = MediaType.APPLICATION_JSON_VALUE, 
-			produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/users/{id}")
+	  public ResponseEntity<User> getUserById(@PathVariable(value = "id") int userId)
+	      throws ResourceNotFoundException {
+	    User user = userService.getUserById(userId)
+	        .orElseThrow(() -> new ResourceNotFoundException("User not found for this id :: " + userId));
+	    return ResponseEntity.ok().body(user);
+	}
+
+	@PostMapping(value = "/users")
 	public void addUser(@RequestBody User user) {
 		userService.addUser(user);
 	}
 	
-	@PutMapping(value = "/users/{id}",
-			consumes = MediaType.APPLICATION_JSON_VALUE, 
-			produces = MediaType.APPLICATION_JSON_VALUE)
-	public void updateUser(@PathVariable(value = "id") int userId, @RequestBody User user) {
-		userService.updateUser(user);
-	}
+	@PutMapping(value = "/users/{id}")
+	public ResponseEntity<User> updateUser(@PathVariable(value = "id") int userId,
+	       @RequestBody User userDetails) throws ResourceNotFoundException {
+	    User user = userService.getUserById(userId)
+	        .orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + userId));
+	
+	    user.setUserId(userDetails.getUserId());
+	    user.setUserName(userDetails.getUserName());
+	    user.setUserPassword(userDetails.getUserPassword());
+	    user.setUserDob(userDetails.getUserDob());
+	    user.setUserGender(userDetails.getUserGender());
+	    final User updatedUser = userService.addUser(user);
+	    return ResponseEntity.ok(updatedUser);
+	  }
+	
 	
 	@DeleteMapping(value= "/users")
-	public void deleteBooks() {
+	public void deleteUsers() {
 		userService.deleteAllUsers();
 	}
 	
-	@DeleteMapping("/users/{id}")
-	public void deleteBook(@PathVariable(value = "id") int userId) {
-		userService.deleteUser(userId);
+
+
+	  @DeleteMapping("/users/{id}")
+	  public Map<String, Boolean> deleteUser(@PathVariable(value = "id") int userId)
+	      throws ResourceNotFoundException {
+	    User user = userService.getUserById(userId)
+	        .orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + userId));
+
+	    userService.deleteUser(user);
+	    Map<String, Boolean> response = new HashMap<>();
+	    response.put("deleted", Boolean.TRUE);
+	    return response;
+	  }
 	}
 
-	
-	@GetMapping(value = "/users/{id}")
-	public Optional<User> getOneCustomer(@PathVariable(value = "id") int userId) {
-		return userService.getUserById(userId);
-	}
-	
 
-
-
-}

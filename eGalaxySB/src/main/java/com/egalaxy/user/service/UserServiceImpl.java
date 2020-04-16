@@ -1,6 +1,7 @@
 package com.egalaxy.user.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -37,9 +38,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public void deleteUser(int userId) {
-		long uid = userId;
-		userRepository.deleteById(uid);
+	public Map<String, Boolean> deleteUser(User user) {
+		 userRepository.delete(user);
+		return null;
 	}
 
 	@Override
@@ -50,8 +51,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public void addUser(User user) {
-		userRepository.save(user);
+	public User addUser(User user) {
+		return userRepository.save(user);
 	}
+
 
 }

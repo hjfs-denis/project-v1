@@ -31,8 +31,8 @@ public class User {
 		
 	}
 	
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setUserId(long l) {
+		this.userId = l;
 	}
 	
 	public long getUserId() {
@@ -73,8 +73,16 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", userName=" + userName + ", userPassword=" + userPassword + ", userDob="
-				+ userDob + ", userGender=" + userGender + "]";
+		return "User [userId=" + userId + ", userName=" + userName + ", userEmail=" + userEmail + ", userPassword="
+				+ userPassword + ", userDob=" + userDob + ", userGender=" + userGender + "]";
+	}
+
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
 	}
 
 	
